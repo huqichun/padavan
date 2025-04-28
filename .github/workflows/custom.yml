@@ -103,7 +103,7 @@ on:
         description: 'String JSON list of plug-ins'
         required: true
         type: string
-        default: '{"ss":"n","v2ray":"n","xray":"n","trojan":"n","ssobfs":"n","smartdns":"y","vlmcsd":"n","ttyd":"n","iperf3":"n"}'
+        default: '{"ss":"n","v2ray":"n","xray":"n","trojan":"n","ssobfs":"n","smartdns":"y","vlmcsd":"n","ttyd":"n","iperf3":"n","adguardhome":"y","socat":"y"}'
       customization:
         description: 'String JSON list of Customization'
         required: true
@@ -179,6 +179,8 @@ jobs:
           echo "vlmcsd=${{fromJson(inputs.plugins).vlmcsd}}" >> $GITHUB_ENV
           echo "ttyd=${{fromJson(inputs.plugins).ttyd}}" >> $GITHUB_ENV
           echo "iperf3=${{fromJson(inputs.plugins).iperf3}}" >> $GITHUB_ENV
+          echo "adguardhome=${{fromJson(inputs.plugins).adguardhome}}" >> $GITHUB_ENV
+          echo "socat=${{fromJson(inputs.plugins).socat}}" >> $GITHUB_ENV
       - name: Compile the nano version
         if: ${{ github.event.inputs.nanoversion == 'true' }}
         run: |
@@ -211,6 +213,8 @@ jobs:
           echo "CONFIG_FIRMWARE_INCLUDE_VLMCSD=${{env.vlmcsd}}" >> .config
           echo "CONFIG_FIRMWARE_INCLUDE_TTYD=${{env.ttyd}}" >> .config
           echo "CONFIG_FIRMWARE_INCLUDE_IPERF3=${{env.iperf3}}" >> .config
+          echo "CONFIG_FIRMWARE_INCLUDE_ADGUARDHOME=${{env.adguardhome}}" >> .config
+          echo "CONFIG_FIRMWARE_INCLUDE_SOCAT=${{env.socat}}" >> .config
           # cpufreq
           if ${{ github.event.inputs.cpufreq == 'true' }}; then
             echo "CONFIG_FIRMWARE_INCLUDE_OC=y" >> .config
